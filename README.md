@@ -23,7 +23,15 @@ Modificar y personalizar el kernel de linux para agregar nuevas funcionalidades 
 
 ## 📍 Tecnologías
 
+Estas son las tecnologías, herramientas y paquetes utilizados en el proyecto:
+
+- [**Kernel linux mint versión 6.8.0**](https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.8.tar.xz)
+- [**Git**](https://git-scm.com/downloads)
+
 ## 🛠️ Herramientas
+
+- [**Oracle VM VirtualBox Administrator:**](https://www.virtualbox.org/wiki/Downloads)
+- [**Visual Studio Code:**](https://code.visualstudio.com/download)
 
 ## 💼 Paquetes
 
