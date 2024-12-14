@@ -7,6 +7,9 @@
 - 🛠️ Herramientas
 - 💼 Paquetes
 - 🛡️ Guía Instalación
+- Informe Técnico ☢️
+- Detalles de las syscalls y modulo de Kernel 🕵️
+- Pruebas Realizadas 🩻
 - 🤔 Reflexión Personal y autoevaluación
 ## 🎯 Objetivos
 
@@ -26,13 +29,12 @@ Modificar y personalizar el kernel de linux para agregar nuevas funcionalidades 
 Estas son las tecnologías, herramientas y paquetes utilizados en el proyecto:
 
 - [**Kernel linux mint versión 6.8.0**](https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.8.tar.xz)
-- [**Git**](https://git-scm.com/downloads)
-
+- [**Gitkraken**](https://www.gitkraken.com/)
 ## 🛠️ Herramientas
 
 - [**Oracle VM VirtualBox Administrator:**](https://www.virtualbox.org/wiki/Downloads)
 - [**Visual Studio Code:**](https://code.visualstudio.com/download)
-- [**Gitkraken**](https://www.gitkraken.com/)
+
 ## 💼 Paquetes
 - GCC
 - MAKE
@@ -151,6 +153,7 @@ Ejecuta el siguiente comando para crear un enlace simbólico:
 ln -s /home/kevin/Documents/So2_201902278_VD2024/arch/x86/entry/syscalls/syscall_64.tbl syscall_64.tbl
 ```
 
+
 ### Explicación del Comando
 
 - **ln**: Comando para crear enlaces (duros o simbólicos).
@@ -164,5 +167,23 @@ Después de ejecutar el comando:
 - Se crea un archivo simbólico llamado `syscall_64.tbl` en el directorio actual.
 - Este enlace apunta al archivo original en `/home/kevin/Documents/So2_201902278_VD2024/arch/x86/entry/syscalls/syscall_64.tbl`.
 
+Luego de crear los enlaces simbolicos comenzamos con la elaboración de los modulos de kernel, para eso debemos de modificar/crear los siguientes archivos 
 
+# Modificaciones en módulo de Kernel 
+obj-y += syscall_usac.o 
+## Makefile
+- se modificó <u>**obj-m += syscall_usac.o**</u> en un **Makefile** para la construcción de un kernel de linux.
+
+se modificó **obj-m += syscall_usac.o**
+
+## syscall_usac.c 📞
+En el archivo de **syscall_usac.c** se implementan las 3 llamadas al sistema (syscalls), estas son: 
+- capture_memory_snapshot_201902278
+- track_syscall_usage_201902278.
+- get_io_throttle_201902278.
+## syscall_64.tbl
+En la syscall.tbl se asigna el número de syscall a llamar las syscall del proyecto.
+## Informe Técnico
+## Detalles de las syscalls y modulo de Kernel 🕵️
+## Pruebas Realizadas 🩻
 ## 🤔 Reflexión Personal y autoevaluación
