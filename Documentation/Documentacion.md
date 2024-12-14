@@ -7,7 +7,7 @@
 - 🛠️ Herramientas
 - 💼 Paquetes
 - 🛡️ Guía Instalación
-
+- 🤔 Reflexión Personal y autoevaluación
 ## 🎯 Objetivos
 
 ## General
@@ -32,9 +32,12 @@ Estas son las tecnologías, herramientas y paquetes utilizados en el proyecto:
 
 - [**Oracle VM VirtualBox Administrator:**](https://www.virtualbox.org/wiki/Downloads)
 - [**Visual Studio Code:**](https://code.visualstudio.com/download)
-
+- [**Gitkraken**](https://www.gitkraken.com/)
 ## 💼 Paquetes
-
+- GCC
+- MAKE
+- libncurses-dev
+- libncurses5-dev
 ## 🛡️ Guía Instalación
 Ejecutar los siguientes comandos para instalar las herramientas y librerías.
 ```bash
@@ -160,3 +163,6 @@ ln -s /home/kevin/Documents/So2_201902278_VD2024/arch/x86/entry/syscalls/syscall
 Después de ejecutar el comando:
 - Se crea un archivo simbólico llamado `syscall_64.tbl` en el directorio actual.
 - Este enlace apunta al archivo original en `/home/kevin/Documents/So2_201902278_VD2024/arch/x86/entry/syscalls/syscall_64.tbl`.
+
+
+## 🤔 Reflexión Personal y autoevaluación
