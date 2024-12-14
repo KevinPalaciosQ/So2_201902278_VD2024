@@ -14,6 +14,10 @@ struct mem_snapshot {
     __u64 cache_size;
 };
 
+struct io_throttle_config{
+};
+
+
 // Implementación de la syscall
 SYSCALL_DEFINE1(capture_memory_snapshot_201902278, struct mem_snapshot __user *, snapshot)
 {
