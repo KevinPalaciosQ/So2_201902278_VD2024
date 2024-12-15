@@ -14,9 +14,6 @@ struct mem_snapshot {
     __u64 cache_size;
 };
 
-struct io_throttle_config{
-};
-
 
 // Implementación de la syscall
 SYSCALL_DEFINE1(capture_memory_snapshot_201902278, struct mem_snapshot __user *, snapshot)
@@ -27,14 +24,14 @@ SYSCALL_DEFINE1(capture_memory_snapshot_201902278, struct mem_snapshot __user *,
     // Obtén información del sistema
     si_meminfo(&i);
 
-    // Llena la estructura con datos de memoria
+    // llenar la estructura de memoria
     ksnapshot.total_memory = i.totalram << (PAGE_SHIFT - 10);  // En KB
     ksnapshot.free_memory = i.freeram << (PAGE_SHIFT - 10);    // En KB
     ksnapshot.active_memory = global_node_page_state(NR_ACTIVE_ANON) << (PAGE_SHIFT - 10);
     ksnapshot.swap_used = (i.totalswap - i.freeswap) << (PAGE_SHIFT - 10);
     ksnapshot.cache_size = global_node_page_state(NR_FILE_PAGES) << (PAGE_SHIFT - 10);
 
-    // Copia la información a espacio de usuario
+    // Dar replica de datos al usuario
     if (copy_to_user(snapshot, &ksnapshot, sizeof(struct mem_snapshot)))
         return -EFAULT;
 

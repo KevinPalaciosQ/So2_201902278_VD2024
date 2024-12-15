@@ -184,6 +184,109 @@ En el archivo de **syscall_usac.c** se implementan las 3 llamadas al sistema (sy
 ## syscall_64.tbl
 En la syscall.tbl se asigna el número de syscall a llamar las syscall del proyecto.
 ## Informe Técnico
+
+ ## capture_memory_snapshot_201902278
+   ```c
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/mm.h>
+#include <linux/swap.h>
+#include <linux/slab.h>
+#include <linux/uaccess.h>
+#include <linux/vmstat.h>
+
+struct mem_snapshot {
+    __u64 total_memory;
+    __u64 free_memory;
+    __u64 active_memory;
+    __u64 swap_used;
+    __u64 cache_size;
+};
+
+
+// Implementación de la primer Syscall
+SYSCALL_DEFINE1(capture_memory_snapshot_201902278, struct mem_snapshot __user *, snapshot)
+{
+    struct mem_snapshot ksnapshot;
+    struct sysinfo i;
+
+    // Obtén información del sistema
+    si_meminfo(&i);
+
+    // Llena la estructura con datos de memoria
+    ksnapshot.total_memory = i.totalram << (PAGE_SHIFT - 10);  // En KB
+    ksnapshot.free_memory = i.freeram << (PAGE_SHIFT - 10);    // En KB
+    ksnapshot.active_memory = global_node_page_state(NR_ACTIVE_ANON) << (PAGE_SHIFT - 10);
+    ksnapshot.swap_used = (i.totalswap - i.freeswap) << (PAGE_SHIFT - 10);
+    ksnapshot.cache_size = global_node_page_state(NR_FILE_PAGES) << (PAGE_SHIFT - 10);
+
+    // Copia la información a espacio de usuario
+    if (copy_to_user(snapshot, &ksnapshot, sizeof(struct mem_snapshot)))
+        return -EFAULT;
+
+    return 0;
+}
+
+   ```
+## track_syscall_usage_201902278.
+
+   ```
+   uname -r
+   ```
+##  get_io_throttle_201902278.
+   ```c
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/sched.h>
+#include <linux/pid.h>
+#include <linux/cred.h>
+#include <linux/errno.h>
+
+// Estructura para almacenar las estadísticas de I/O
+struct io_stats {
+    unsigned long lectura_bytes;
+    unsigned long escribir_bytes;
+    unsigned long leer_operations;
+    unsigned long escribir_operations;
+    unsigned long io_wait_time;
+};
+
+SYSCALL_DEFINE2(get_io_throttle_201902278, pid_t, pid, struct io_stats __user *, stats)
+{
+    struct task_struct *task;
+    struct io_stats stats_kernel;
+
+    // Obtener la estructura task_struct del proceso
+    task = get_pid_task(find_vpid(pid), PIDTYPE_PID);
+    if (!task)
+        return -ESRCH;
+
+    // Copiar estadísticas de I/O del proceso
+    stats_kernel.lectura_bytes = READ_ONCE(task->ioac.lectura_bytes);
+    stats_kernel.escribir_bytes = READ_ONCE(task->ioac.escribir_bytes);
+    stats_kernel.io_wait_time = READ_ONCE(task->se.sum_exec_runtime);
+
+    // Dar replica de datos al usuario
+    if (copy_to_user(stats, &stats_kernel, sizeof(stats_kernel)))
+        return -EFAULT;
+
+    return 0;
+}
+   ```
 ## Detalles de las syscalls y modulo de Kernel 🕵️
-## Pruebas Realizadas 🩻
+## Pruebas Realizadas 🩻/ Errores
+
 ## 🤔 Reflexión Personal y autoevaluación
+En el desarollo de este proyecto, enfocado en la expansión del kernel de Linux, fue una experiencia desafiante y enriquecedora. A lo largo del proceso de la realización de este proyecto, no solo adquirí un conocimiento más profundo de cómo funciona internamente un sistema operativo, sino que también puse en práctica habilidades fundametales en programación de sistemas y resolución de problemas técnicos complejos.
+
+### Logros y Aspectos Positivos:
+
+- Consolidación de conocimientos técnicos.
+- Enfoque estructurado y metodólogico.
+- Generar un mayor interes en el uso de Linux.
+
+### Lecciones Aprendidas:
+
+- Importancia de la planificación.
+- Adaptación a herramientas nuevas.
+- Trabajo en entornos críticos.
