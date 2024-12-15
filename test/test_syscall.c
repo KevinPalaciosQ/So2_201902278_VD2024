@@ -6,10 +6,10 @@
 
 // Estructura para almacenar las estadísticas de I/O
 struct io_stats {
-    unsigned long read_bytes;
-    unsigned long write_bytes;
-    unsigned long read_operations;
-    unsigned long write_operations;
+    unsigned long lectura_bytes;
+    unsigned long escribir_bytes;
+    unsigned long leer_operations;
+    unsigned long escribir_operations;
     unsigned long io_wait_time;
 };
 
