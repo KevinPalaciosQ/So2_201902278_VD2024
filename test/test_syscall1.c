@@ -6,7 +6,6 @@ struct mem_snapshot {
     unsigned long long total_memory;
     unsigned long long free_memory;
     unsigned long long active_memory;
-    unsigned long long swap_used;
     unsigned long long cache_size;
 };
 
@@ -16,7 +15,6 @@ int main() {
         printf("Total memory: %llu KB\n", snapshot.total_memory);
         printf("Free memory: %llu KB\n", snapshot.free_memory);
         printf("Active memory: %llu KB\n", snapshot.active_memory);
-        printf("Swap used: %llu KB\n", snapshot.swap_used);
         printf("Cache size: %llu KB\n", snapshot.cache_size);
     } else {
         perror("syscall");

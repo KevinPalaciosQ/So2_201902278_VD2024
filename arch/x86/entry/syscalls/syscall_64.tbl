@@ -429,7 +429,10 @@
 #--------------ACA EMPIEZAN LAS SYSCALLS DEL PROYECTO/LLAMADAS A LAS SYSCALLS
 548 common capture_memory_snapshot_201902278 sys_capture_memory_snapshot_201902278
 549 common get_io_throttle_201902278         sys_get_io_throttle_201902278
-#550 common track_syscall_usage_201902278     sys_track_syscall_usage_201902278
+550 common track_syscall_usage_201902278     sys_track_syscall_usage_201902278
+551 common tamaloc_201902278                 sys_tamaloc_201902278
+552 common memory_usage_general_201902278    sys_memory_usage_general_201902278
+553 common memory_usage_table_201902278      sys_memory_usage_table_201902278
 
 # This is the end of the legacy x32 range.  Numbers 548 and above are
 # not special and are not to be used for x32-specific syscalls.

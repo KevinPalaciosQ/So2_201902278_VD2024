@@ -10,7 +10,6 @@ struct mem_snapshot {
     __u64 total_memory;
     __u64 free_memory;
     __u64 active_memory;
-    __u64 swap_used;
     __u64 cache_size;
 };
 

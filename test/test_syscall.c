@@ -6,10 +6,10 @@
 
 // Estructura para almacenar las estadísticas de I/O
 struct io_stats {
-    unsigned long lectura_bytes;
-    unsigned long escribir_bytes;
-    unsigned long leer_operations;
-    unsigned long escribir_operations;
+    unsigned long read_bytes;
+    unsigned long write_bytes;
+    unsigned long read_operations;
+    unsigned long write_operations;
     unsigned long io_wait_time;
 };
 
@@ -37,7 +37,7 @@ int main() {
     printf("Estadísticas de I/O para el PID %d:\n", pid);
     printf("Bytes leídos: %lu\n", stats.read_bytes);
     printf("Bytes escritos: %lu\n", stats.write_bytes);
-    printf("Tiempo en espera de I/O: %lu jiffies\n", stats.io_wait_time);
+    printf("Tiempo en espera de I/O: %lu ns\n", stats.io_wait_time);
 
     return 0;
 }

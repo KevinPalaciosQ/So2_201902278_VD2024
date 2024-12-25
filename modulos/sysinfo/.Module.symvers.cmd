@@ -1,0 +1,1 @@
+savedcmd_/home/kevin/Documents/So2_201902278_VD2024/modulos/sysinfo/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/kevin/Documents/So2_201902278_VD2024/modulos/sysinfo/Module.symvers -T /home/kevin/Documents/So2_201902278_VD2024/modulos/sysinfo/modules.order -i Module.symvers -e 
