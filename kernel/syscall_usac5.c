@@ -65,7 +65,7 @@ SYSCALL_DEFINE3(memory_usage_table_201902278, pid_t, pid, struct memory_stats __
         return count; // Retornar el número de procesos copiados
     }
 
-    // Si PID no es 0, manejar como antes
+    // Si PID no es 0, buscar especificamente
     rcu_read_lock();
     task = pid_task(find_vpid(pid), PIDTYPE_PID);
     if (!task) {

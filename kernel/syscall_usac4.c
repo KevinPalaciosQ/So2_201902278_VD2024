@@ -16,11 +16,7 @@ SYSCALL_DEFINE1(tamaloc_201902278, size_t, size)
     {
         return -ENOMEM; // No hay memoria
     }
-    // Para crear la paginacion en zeros de manera dinamica, necesitamos un mapeo virtual
-    /*
-    unsigned long do_mmap(struct file * file, unsigned long addr, unsigned long len, unsigned long prot,
-                          unsigned long flag, unsigned long offset)
-*/
+
 	addr = vm_mmap(NULL, 0, aligned_size,
 		PROT_READ | PROT_WRITE,
 		MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, 0);
