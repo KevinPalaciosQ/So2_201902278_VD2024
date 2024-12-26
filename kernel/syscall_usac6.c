@@ -1,3 +1,4 @@
+/*
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <linux/mm.h>
@@ -39,6 +40,43 @@ SYSCALL_DEFINE1(memory_usage_general_201902278, struct memstats __user *, stats)
 
     // Copiar los resultados al espacio de usuario
     if (copy_to_user(stats, &kstats, sizeof(struct memstats)))
+        return -EFAULT;
+
+    return 0;
+}
+*/
+//la syscall usada es memory_usage_general_201902278
+#include <linux/kernel.h>
+#include <linux/syscalls.h>
+#include <linux/sched.h>
+#include <linux/mm.h>
+#include <linux/mm_types.h>
+
+struct total_memory_stats {
+    unsigned long total_reserved_kb;
+    unsigned long total_commited_kb;
+};
+
+SYSCALL_DEFINE1(memory_usage_general_201902278, struct total_memory_stats __user *, stats) {
+    struct task_struct *task;
+    struct mm_struct *mm;
+    struct total_memory_stats total_stats = {0, 0};
+
+    if (!stats)
+        return -EINVAL;
+
+    // Recorrer todos los procesos activos
+    for_each_process(task) {
+        mm = get_task_mm(task);
+
+        if (mm) {
+            total_stats.total_reserved_kb += get_mm_rss(mm) * PAGE_SIZE / 1024;
+            total_stats.total_commited_kb += get_mm_counter(mm, MM_FILEPAGES) * PAGE_SIZE / 1024;
+            mmput(mm);
+        }
+    }
+
+    if (copy_to_user(stats, &total_stats, sizeof(total_stats)))
         return -EFAULT;
 
     return 0;

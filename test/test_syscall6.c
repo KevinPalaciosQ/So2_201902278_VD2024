@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/syscall.h>
@@ -44,3 +45,50 @@ int main() {
 
     return 0;
 }
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <errno.h>
+
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+
+struct total_memory_stats {
+    unsigned long total_reserved_kb;
+    unsigned long total_commited_kb;
+};
+
+#define SYSCALL_NUMBER 552 
+
+int main() {
+    struct total_memory_stats stats;
+
+    // Invocar la syscall
+    long result = syscall(SYSCALL_NUMBER, &stats);
+
+    if (result == 0) {
+        // Mostrar resultados en una tabla con colores
+        printf(CYAN "+-----------------------+------------------+\n" RESET);
+        printf(CYAN "| " YELLOW "Estadística           " CYAN "| " YELLOW "Valor (KB)       " CYAN "|\n" RESET);
+        printf(CYAN "+-----------------------+------------------+\n" RESET);
+        printf(CYAN "| " GREEN "Total Reservado       " CYAN "| " MAGENTA "%16lu " CYAN "|\n" RESET, stats.total_reserved_kb);
+        printf(CYAN "| " GREEN "Total Comprometido    " CYAN "| " MAGENTA "%16lu " CYAN "|\n" RESET, stats.total_commited_kb);
+        printf(CYAN "+-----------------------+------------------+\n" RESET);
+    } else {
+        // Manejo de errores
+        fprintf(stderr, RED "Error al ejecutar la syscall: " RESET);
+        perror("");
+        fprintf(stderr, RED "Código de error: %ld (errno: %d)\n" RESET, result, errno);
+    }
+
+    return 0;
+}
+
