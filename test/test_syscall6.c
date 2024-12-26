@@ -15,10 +15,15 @@ int main() {
     struct total_memory_stats stats;
 
     if (syscall(SYSCALL_NUMBER, &stats) == 0) {
-        printf("Memoria total reservada: %lu MB\n", stats.total_reserved_mb);
-        printf("Memoria total utilizada: %lu MB\n", stats.total_used_mb);
+        // Imprimir tabla con colores
+        printf("\033[1;34m+---------------------+----------------+\033[0m\n");
+        printf("\033[1;34m| Categoría           | MB             |\033[0m\n");
+        printf("\033[1;34m+---------------------+----------------+\033[0m\n");
+        printf("\033[1;32m| Memoria reservada   | %14lu |\033[0m\n", stats.total_reserved_mb);
+        printf("\033[1;32m| Memoria utilizada   | %14lu |\033[0m\n", stats.total_used_mb);
+        printf("\033[1;34m+---------------------+----------------+\033[0m\n");
     } else {
-        perror("Error al ejecutar la syscall");
+        perror("\033[1;31mError al ejecutar la syscall\033[0m");
     }
 
     return 0;
