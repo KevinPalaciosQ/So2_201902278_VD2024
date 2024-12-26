@@ -8,7 +8,7 @@
 - 💼 Paquetes
 - 🛡️ Guía Instalación
 - Informe Técnico ☢️
-- Detalles de las syscalls y modulo de Kernel 🕵️
+- Detalles de las syscalls l 🕵️
 - Pruebas Realizadas 🩻
 - 🤔 Reflexión Personal y autoevaluación
 ## 🎯 Objetivos
@@ -176,31 +176,45 @@ se modificó **obj-m += syscall_usac.o**
 
 ## syscall_usac.c 📞
 En el archivo de **syscall_usac.c** se implementan las 3 llamadas al sistema (syscalls), estas son: 
-- capture_memory_snapshot_201902278
-- track_syscall_usage_201902278.
-- get_io_throttle_201902278.
+- tamaloc
+- memory_usage_table.
+- memory_usage_general.
 ## syscall_64.tbl
 En la syscall.tbl se asigna el número de syscall a llamar las syscall del proyecto.
 ## Informe Técnico
 
  ## tamalloc
 ![tamaloc](../images/tamaloc.png)
-
+En la parte de entrada de usuario recibe dos argumentos pid_pit y este es el identificador de procesos, usa el struct io_statistics __user *stats: que es un puntero para copiar los datos al usuario.
+Tambien utiliza get_pid_task y find_vpid para obtener el descriptor del proceso general del pid  si el proceso no existe con -ESRCH retorna no encontrado.
 ## memory_usage_table.
 ![s1](../images/syscall2.png)
-
+Esta syscall como la anterior recibe 3 parámetros, al momento de obtener pid === 0 recorre un for_each_process para mostrar una tabla, obtiene la memoria reservada, comprometida y el OOM Score, si el pid!=0 este solo muestra los datos del PID deseado.
 ##  memory_usage_general.
 ![s2](../images/syscall3.png)
+Recibe solo un argumento, que es el puntero donde se copiaran las estadisticas, obtiene la información del sistema y calcula la memoria general, recorre todos los procesos con un for_each_process, obtiene la estructura de cada proceso y convierte los valores en mb
+## Detalles de las syscalls 🕵️
 
-## Detalles de las syscalls y modulo de Kernel 🕵️
+- Tamaloc: esta syscall obtiene estadísticas de operaciones de entrada/salida de un proceso especifrico identificado por su PID y devuelve el espacio de usuario mediante la estructura de io_statistics. 
+
+- memory_usage_table: la syscall proporciona estadísticas detalladas sobre la memoria reservada(virtual), la memoria comprometida (física) y el OOM Score para procesos individuales o todos los procesos en el sistema. Esto es útil para monitoreo de recursos, análisis de rendimiento y diagnóstico de problemas relacionados con la gestión de memoria.
+
+- memory_usage_general: se encarga de recolectar y proveer estadísticas detalladas de la memoria en general del sistema.
 ## Pruebas Realizadas 🩻/ Errores
-![e1](../images/e1.jpeg)
-![e2](../images/e2.jpeg)
-![e3](../images/e3.jpeg)
 
+Durante las pruebas de syscalls todo transcurrió con normalidad. 
+
+![e1](../images/e1.jpeg)
+El primer Error Ourrió debido a una mala referencia de una syscall, no estaba definida en la tabla de syscalls.
+![e2](../images/e2.jpeg)
+El segundo error ocurrió al no estar trabajando en el Kernel del proyecto, debido a una actualización de sistema.
+![e3](../images/e3.jpeg)
+este error ocurrió debido a trabajar mal un mmap.
 ## 🤔 Reflexión Personal y autoevaluación
 Durante el desarollo del Proyecto 2, uno de los mayores desafíos fue el calculo correcto del OOM Score de cada proceso. Debido a que este puntaje, utlizado por el kernel de linux para priorizar qué procesos debe eliminar en situaciones de memoria insuficiente, requiere un análisis detallados de múltiples factores, incluidos el consumo de meoria, las prioridades del proceso y las políticas del sistema.
 
+
+Finalmente, la complejidad inherente de modificar el Kernel, junto con la limitación de tiempo debido a las festividades del mes de diciembre, dificultó la exploración de alternativas que pudieron haber simplificado el cálculo, y pese a encontrar alternativas estas no funcionaron obteniendo los datos esperados.
 ### Logros y Aspectos Positivos:
 
 - Consolidación de conocimientos técnicos.
