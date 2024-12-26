@@ -919,7 +919,11 @@ void start_kernel(void)
 	printk(KERN_INFO " \\ \\ \\_/\\ \\L\\.\\_/\__, `\\/\\  __/      \\ \\ \\  \n");
 	printk(KERN_INFO "  \\ \\_\\\\ \\__/.\\_\\/\\____/\\ \\____\\      \\ \\_\\ \n");
 	printk(KERN_INFO "   \\/_/ \\/__/\\/_/\\/___/  \\/____/       \\/_/ \n");
-
+    printk(KERN_INFO"Estas son las Syscalls Implementadas en Esta fase:");	
+    printk(KERN_INFO"\n");	
+    printk(KERN_INFO"1.capture_memory_snapshot \n");	
+	printk(KERN_INFO"2. get_io_throttle \n");	
+    printk(KERN_INFO"3. track_syscall_usage \n");	
 	printk(KERN_INFO"⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣫⣥⣶⣶⣶⣶⣬⢙⢿⣿⡜⣏⣾⣿⢟⣛⡿⣛⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻\n");
 	printk(KERN_INFO"⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣣⣾⣿⣿⡿⣛⣭⢶⣚⡷⣤⡙⠇⡬⣩⠶⠛⣮⢗⣯⣛⢶⡤⣉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣽\n");
 	printk(KERN_INFO"⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⠟⣱⢾⡹⡞⠋⠁⠀⠈⢳⡀⠁⢁⠀⠠⠄⠬⠑⠻⣎⣷⡹⣖⡌⠋⠰⠮⠙⣿⣿⣿⣿⣿⣿⣽⣿\n");
@@ -949,6 +953,10 @@ void start_kernel(void)
 	printk(KERN_INFO "   \\/_/ \\/__/\\/_/\\/___/  \\/____/     \\/_____/  \n");
 	printk(KERN_INFO "                                                                 \n");
 	printk(KERN_INFO "   															\n");
+    printk(KERN_INFO"Estas son las Syscalls Implementadas en Esta fase:\n");	
+    printk(KERN_INFO"1. tamaloc \n");	
+	printk(KERN_INFO"2. memory_usage_table \n");	
+    printk(KERN_INFO"3. memory_usage_general \n");	
 	printk(KERN_INFO "⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢟⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷\n");
 	printk(KERN_INFO "⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇\n");
 	printk(KERN_INFO "⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽\n");
@@ -972,6 +980,10 @@ void start_kernel(void)
 	printk(KERN_INFO "  \\ \\_\\\\ \\__/.\_\\/\\____/\\ \\____\\    \\ \\____/");
 	printk(KERN_INFO "   \\/_/ \\/__/\\/_/\\/___/  \\/____/     \\/___/ ");
     printk(KERN_INFO"");
+    printk(KERN_INFO"Estas son las Syscalls Implementadas en Esta fase:\n");	
+    printk(KERN_INFO"1. \n");	
+	printk(KERN_INFO"2. \n");	
+    printk(KERN_INFO"3. \n");		
 	printk(KERN_INFO "⣴⣿⣿⣿⣿⠿⠟⢉⣚⣋⣴⣿⣿⣿⣿⠿⠟⠛⠛⣫⣥⣶⣶⣶⠶⠬⢭⡛⠻⣿⣿⣿⣿⣿⣿⠟⢊⠉⠲⢊⣩⣿⣿⣿⣿⣿⡏⣼⣿⣿");
 	printk(KERN_INFO "⣿⣿⣿⣿⡏⠀⣄⠀⠩⠛⠿⡿⢛⣩⠴⠶⢶⣶⣶⢛⣿⣿⣿⣷⡰⣭⣄⡈⢑⢦⣙⠿⠛⣉⠄⠀⣠⣾⡇⢹⠿⠟⣿⣿⣿⡿⢠⣿⣿⣿");
 	printk(KERN_INFO "⠁⠀⢀⣶⡏⠀⢿⣷⣄⡀⠀⠀⠉⠂⠀⣴⢾⡿⢃⣾⣿⣿⡿⢿⣷⠀⠻⣿⣶⣄⠩⠐⠀⠰⠄⠚⢿⣿⡇⠁⠀⣼⣿⣿⣿⡇⣾⣿⣿⣿");
