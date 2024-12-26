@@ -183,24 +183,23 @@ En el archivo de **syscall_usac.c** se implementan las 3 llamadas al sistema (sy
 En la syscall.tbl se asigna el número de syscall a llamar las syscall del proyecto.
 ## Informe Técnico
 
- ## capture_memory_snapshot_201902278
-   ```c
+ ## tamalloc
+![tamaloc](../images/tamaloc.png)
 
-   ```
-## track_syscall_usage_201902278.
+## memory_usage_table.
+![s1](../images/syscall2.png)
 
-   ```
-   uname -r
-   ```
-##  get_io_throttle_201902278.
-   ```c
+##  memory_usage_general.
+![s2](../images/syscall3.png)
 
-   ```
 ## Detalles de las syscalls y modulo de Kernel 🕵️
 ## Pruebas Realizadas 🩻/ Errores
+![e1](../images/e1.jpeg)
+![e2](../images/e2.jpeg)
+![e3](../images/e3.jpeg)
 
 ## 🤔 Reflexión Personal y autoevaluación
-En el desarollo de este proyecto, enfocado en la expansión del kernel de Linux, fue una experiencia desafiante y enriquecedora. A lo largo del proceso de la realización de este proyecto, no solo adquirí un conocimiento más profundo de cómo funciona internamente un sistema operativo, sino que también puse en práctica habilidades fundametales en programación de sistemas y resolución de problemas técnicos complejos.
+Durante el desarollo del Proyecto 2, uno de los mayores desafíos fue el calculo correcto del OOM Score de cada proceso. Debido a que este puntaje, utlizado por el kernel de linux para priorizar qué procesos debe eliminar en situaciones de memoria insuficiente, requiere un análisis detallados de múltiples factores, incluidos el consumo de meoria, las prioridades del proceso y las políticas del sistema.
 
 ### Logros y Aspectos Positivos:
 
@@ -211,5 +210,6 @@ En el desarollo de este proyecto, enfocado en la expansión del kernel de Linux,
 ### Lecciones Aprendidas:
 
 - Importancia de la planificación.
-- Adaptación a herramientas nuevas.
-- Trabajo en entornos críticos.
+- Documentación y Depuración.
+- Manejo de Complejidad.
+- Comunicación entre Kernel y espacio de Usuario.
