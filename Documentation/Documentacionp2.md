@@ -15,14 +15,12 @@
 
 ## General
 
-Modificar y personalizar el kernel de linux para agregar nuevas funcionalidades y llamadas al sistema, adquiriendo experiencia en la programación de sistemas operativos y comprender los principios básicos de estos mismos.
+Modificar el Kernel de linux en la versión 6.8.49 para poder desarollar e integrar un sistema eficiente para llevar a cabo la gestión de memoría en el kernel de Linux que permita la inicialización de memoria en cero mediante técnicas de asignación usando lazy-zeroing, optimizando el uso de recurso físicos y mejorando el manejo de las estádisticas en tiempo real
 
 ## Específicos
 
-- Configurar el entorno de desarollo.
-- Compilación y personalización del kernel.
-- Desarollo de nuevas llamadas al sistema.
-- Creación de modulos de kernel.
+- Implementar una syscall para recolección de memoria.
+- Diseñar un algoritmo de asignación basado en lazy-zeroing llamado tamaloc.
 
 ## 📍 Tecnologías
 
