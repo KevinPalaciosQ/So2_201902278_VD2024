@@ -7,20 +7,20 @@
 #include <linux/list.h>
 
 // Estructura de estadísticas de memoria
-struct process_memory_stats {
-    pid_t pid;                         // PID del proceso
-    unsigned long reserved_kb;         // Memoria reservada en KB
-    unsigned long reserved_mb;         // Memoria reservada en MB
-    unsigned long committed_kb;        // Memoria comprometida en KB
-    unsigned long committed_mb;        // Memoria comprometida en MB
-    unsigned long committed_percent;   // Porcentaje de memoria comprometida
-    int oom_score;                     // OOM Score
+struct memory_stats {
+    pid_t process_id;                   // PID del proceso
+    unsigned long virtual_mem_kb;       // Memoria virtual reservada en KB
+    unsigned long virtual_mem_mb;       // Memoria virtual reservada en MB
+    unsigned long physical_mem_kb;      // Memoria física comprometida en KB
+    unsigned long physical_mem_mb;      // Memoria física comprometida en MB
+    unsigned long commit_percentage;    // Porcentaje de memoria comprometida
+    int oom_adjust_score;               // OOM Score
 };
 
-SYSCALL_DEFINE3(memory_usage_table_201902278, pid_t, pid, struct process_memory_stats __user *, stats, int, max_processes) {
+SYSCALL_DEFINE3(memory_usage_table_201902278, pid_t, pid, struct memory_stats __user *, stats, int, max_processes) {
     struct task_struct *task;
     struct mm_struct *mm;
-    struct process_memory_stats local_stats;
+    struct memory_stats local_stats;
     int count = 0;
 
     // Validar el puntero de usuario
@@ -38,20 +38,20 @@ SYSCALL_DEFINE3(memory_usage_table_201902278, pid_t, pid, struct process_memory_
                 continue;
 
             // Calcular estadísticas de memoria
-            local_stats.pid = task->pid;  // Asignar el PID del proceso
-            local_stats.reserved_kb = mm->total_vm * (PAGE_SIZE / 1024);
-            local_stats.reserved_mb = local_stats.reserved_kb / 1024; // Convertir a MB
-            local_stats.committed_kb = (get_mm_counter(mm, MM_ANONPAGES) + get_mm_counter(mm, MM_FILEPAGES)) * (PAGE_SIZE / 1024);
-            local_stats.committed_mb = local_stats.committed_kb / 1024; // Convertir a MB
+            local_stats.process_id = task->pid;  // Asignar el PID del proceso
+            local_stats.virtual_mem_kb = mm->total_vm * (PAGE_SIZE / 1024);
+            local_stats.virtual_mem_mb = local_stats.virtual_mem_kb / 1024; // Convertir a MB
+            local_stats.physical_mem_kb = (get_mm_counter(mm, MM_ANONPAGES) + get_mm_counter(mm, MM_FILEPAGES)) * (PAGE_SIZE / 1024);
+            local_stats.physical_mem_mb = local_stats.physical_mem_kb / 1024; // Convertir a MB
 
-            if (local_stats.reserved_kb > 0) {
-                local_stats.committed_percent = (local_stats.committed_kb * 100) / local_stats.reserved_kb;
+            if (local_stats.virtual_mem_kb > 0) {
+                local_stats.commit_percentage = (local_stats.physical_mem_kb * 100) / local_stats.virtual_mem_kb;
             } else {
-                local_stats.committed_percent = 0;
+                local_stats.commit_percentage = 0;
             }
 
             // Obtener el OOM score
-            local_stats.oom_score = task->signal->oom_score_adj;
+            local_stats.oom_adjust_score = task->signal->oom_score_adj;
 
             // Copiar los resultados de este proceso al buffer de usuario
             if (copy_to_user(&stats[count], &local_stats, sizeof(local_stats))) {
@@ -80,19 +80,19 @@ SYSCALL_DEFINE3(memory_usage_table_201902278, pid_t, pid, struct process_memory_
     }
 
     // Calcular estadísticas de memoria
-    local_stats.pid = task->pid;  // Asignar el PID del proceso
-    local_stats.reserved_kb = mm->total_vm * (PAGE_SIZE / 1024);
-    local_stats.reserved_mb = local_stats.reserved_kb / 1024; // Convertir a MB
-    local_stats.committed_kb = (get_mm_counter(mm, MM_ANONPAGES) + get_mm_counter(mm, MM_FILEPAGES)) * (PAGE_SIZE / 1024);
-    local_stats.committed_mb = local_stats.committed_kb / 1024; // Convertir a MB
+    local_stats.process_id = task->pid;  // Asignar el PID del proceso
+    local_stats.virtual_mem_kb = mm->total_vm * (PAGE_SIZE / 1024);
+    local_stats.virtual_mem_mb = local_stats.virtual_mem_kb / 1024; // Convertir a MB
+    local_stats.physical_mem_kb = (get_mm_counter(mm, MM_ANONPAGES) + get_mm_counter(mm, MM_FILEPAGES)) * (PAGE_SIZE / 1024);
+    local_stats.physical_mem_mb = local_stats.physical_mem_kb / 1024; // Convertir a MB
 
-    if (local_stats.reserved_kb > 0) {
-        local_stats.committed_percent = (local_stats.committed_kb * 100) / local_stats.reserved_kb;
+    if (local_stats.virtual_mem_kb > 0) {
+        local_stats.commit_percentage = (local_stats.physical_mem_kb * 100) / local_stats.virtual_mem_kb;
     } else {
-        local_stats.committed_percent = 0;
+        local_stats.commit_percentage = 0;
     }
 
-    local_stats.oom_score = task->signal->oom_score_adj;
+    local_stats.oom_adjust_score = task->signal->oom_score_adj;
 
     mmput(mm);
     rcu_read_unlock();
